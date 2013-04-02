@@ -1,4 +1,5 @@
 import re
+from views import paige404
 
 class RouteDispatcher(object):
     """ 
@@ -15,7 +16,6 @@ class RouteDispatcher(object):
         >>> router.register_route(r"/hello/(?P<name>\w+)/?", foo)
     """
     def __init__(self):
-        # self.root = root
         self.routes = {}
 
     def __call__(self, environ, start_response):
