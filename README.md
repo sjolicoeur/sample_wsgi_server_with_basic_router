@@ -1,7 +1,8 @@
-INSTALL 
+# INSTALL 
 
 pip install -r requirements.txt
 
-To Run
+# To Run
 
+cd into the app directory
 python app.py 
