@@ -1,14 +1,15 @@
 import re
 from views import paige404
+from custom_exceptions import RouteNotFound
 
 class RouteDispatcher(object):
     """ 
         Main point of entry for our WSGI app to resolve and register url pattern paths.
-        Routes will be executed based on the first route matched. 
+        Routes will be executed based on the first route matched.
         to register a url that will resolve /hello/john
 
-        >>> def foo(env, start_response, name) : 
-        ...     print name 
+        >>> def foo(env, start_response, name) :
+        ...     print name
         ...     start_response('200 OK', [('Content-Type', 'text/html')])
         ...     return ["hello {}".format(name)]
         ...
@@ -24,7 +25,7 @@ class RouteDispatcher(object):
 
             controller, args = self.match_path_to_route(requested_path)
             return controller(environ, start_response, **args)
-        except :
+        except RouteNotFound:
             import sys
             print "an error occured!!!"
             print sys.exc_info()
@@ -36,7 +37,7 @@ class RouteDispatcher(object):
             if found_match :
                 extracted_args = found_match.groupdict()
                 return controller, extracted_args
-        raise Exception("Route not found")
+        raise RouteNotFound("Route not found")
 
     def register_route(self, path, func):
         self.routes[path] = func  

@@ -17,14 +17,14 @@ def paige404(env, start_response): # named after the roller derby athlete
     <h1>Not Found</h1>
     <br>
     {}
-    """.format(show_msg)]   
+    """.format(show_msg)]
 
 
 @render_response_as_json
 def get_fib(env, start_response, num):
     num = int(num)
     fib_result =  fib(num)
-    return  {"response": fib_result} 
+    return {"response": fib_result}
 
 
 @render_response_as_json
@@ -38,12 +38,11 @@ def google_body_fetcher(env, start_response):
 def store_service(env, start_response):
     data = None
     key = "value"
-    data_store  = memcache.Client(['127.0.0.1:11211'], debug=0)
+    data_store = memcache.Client(['127.0.0.1:11211'], debug=0)
     request_method = env['REQUEST_METHOD']
-    if request_method.lower() == "post" :
+    if request_method.lower() == "post":
         post_data = extract_post_data(env)
         data = post_data[key].value
         result = data_store.set(key, data)
         return {"stored" : result, "response" : data }
     return {"response" : data_store.get(key) }
-
