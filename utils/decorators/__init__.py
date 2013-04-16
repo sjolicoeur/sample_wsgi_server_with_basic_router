@@ -18,9 +18,7 @@ def cache(f):
         data_store  = memcache.Client(['127.0.0.1:11211'], debug=0)
         result = data_store.get(cache_key)
         if not result :
-            print "not in cache compute it"
             result = f(*args, **kwargs)
-            print "result is : " , result
             data_store.set(cache_key, result)
         return result
     return wrapper
